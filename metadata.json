@@ -1,0 +1,8 @@
+{
+  "name": "Career Launchpad",
+  "description": "A centralized hub to discover hackathons, professional certifications, and internship opportunities to accelerate your tech career.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
