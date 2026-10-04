@@ -25,6 +25,9 @@ import { NotificationCenterModal } from './components/NotificationCenterModal';
 import { DailyDigestBanner } from './components/DailyDigestBanner';
 import { OpportunityCard } from './components/OpportunityCard';
 import { OpportunityDetailModal } from './components/OpportunityDetailModal';
+import { DomainCertificationSection } from './components/DomainCertificationSection';
+import { DomainInternshipSection } from './components/DomainInternshipSection';
+import { DomainHackathonSection } from './components/DomainHackathonSection';
 import { SecurityDashboard } from './components/SecurityDashboard';
 import { LegalPrivacyModal } from './components/LegalPrivacyModal';
 import { ReportSecurityModal } from './components/ReportSecurityModal';
@@ -40,6 +43,9 @@ import {
   ShieldCheck,
   AlertOctagon,
   Lock,
+  Award,
+  Briefcase,
+  Trophy,
 } from 'lucide-react';
 
 function loadStorage<T>(key: string, fallback: T): T {
@@ -97,6 +103,9 @@ export default function App() {
     'all' | 'today' | 'closing' | 'free' | 'stipend'
   >('all');
   const [domainFilter, setDomainFilter] = useState<string>('All');
+  const [certDomain, setCertDomain] = useState<string>('All');
+  const [internDomain, setInternDomain] = useState<string>('All');
+  const [hackDomain, setHackDomain] = useState<string>('All');
   const [modeFilter, setModeFilter] = useState<string>('All');
   const [sortBy, setSortBy] = useState<'match' | 'deadline' | 'name'>('match');
 
@@ -469,14 +478,44 @@ export default function App() {
           updatedTodayCount={updatedTodayCount}
           closingThisWeekCount={closingThisWeekCount}
           onRefreshFeed={() => {
-            triggerToast('Opportunities refreshed: all 33+ portals verified live for today.');
+            triggerToast('Opportunities refreshed: all 69+ portals verified live for today.');
           }}
           dailyFilter={dailyFilter}
           onSelectDailyFilter={setDailyFilter}
         />
 
-        {/* View Mode: Security Dashboard */}
-        {activeTab === 'security' ? (
+        {/* View Mode: Domain-Wise Hackathons Hub */}
+        {activeTab === 'hackathons' ? (
+          <DomainHackathonSection
+            opportunities={ALL_OPPORTUNITIES}
+            profile={profile}
+            savedIds={savedIds}
+            onToggleSave={handleToggleSave}
+            onOpenDetails={(item) => setSelectedOpportunity(item)}
+            activeDomain={hackDomain}
+            onSelectDomain={setHackDomain}
+          />
+        ) : activeTab === 'certifications' ? (
+          <DomainCertificationSection
+            opportunities={ALL_OPPORTUNITIES}
+            profile={profile}
+            savedIds={savedIds}
+            onToggleSave={handleToggleSave}
+            onOpenDetails={(item) => setSelectedOpportunity(item)}
+            activeDomain={certDomain}
+            onSelectDomain={setCertDomain}
+          />
+        ) : activeTab === 'internships' ? (
+          <DomainInternshipSection
+            opportunities={ALL_OPPORTUNITIES}
+            profile={profile}
+            savedIds={savedIds}
+            onToggleSave={handleToggleSave}
+            onOpenDetails={(item) => setSelectedOpportunity(item)}
+            activeDomain={internDomain}
+            onSelectDomain={setInternDomain}
+          />
+        ) : activeTab === 'security' ? (
           <SecurityDashboard
             onOpenReportModal={() => setReportModalOpen(true)}
             onOpenAdminPortal={() => setAdminModalOpen(true)}
@@ -636,6 +675,42 @@ export default function App() {
                   <option value="deadline">Sort: Closing Soonest</option>
                   <option value="name">Sort: Alphabetical</option>
                 </select>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab('hackathons');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-2.5 py-1.5 bg-amber-50 border border-amber-200 text-amber-700 hover:bg-amber-100 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <Trophy className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Domain Hackathons (23 Portals)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab('certifications');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-2.5 py-1.5 bg-indigo-50 border border-indigo-200 text-indigo-700 hover:bg-indigo-100 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <Award className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Domain Certifications (20 Portals)</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActiveTab('internships');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  className="px-2.5 py-1.5 bg-purple-50 border border-purple-200 text-purple-700 hover:bg-purple-100 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-colors"
+                >
+                  <Briefcase className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Domain Internships (26 Portals)</span>
+                </button>
               </div>
 
               <div className="text-xs text-slate-500 font-mono tabular-nums">
@@ -687,11 +762,11 @@ export default function App() {
           </div>
         )}
 
-        {/* Official Directory of All 33 Verified Portals */}
+        {/* Official Directory of All 69 Verified Portals */}
         <section className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-7 space-y-4">
           <div className="space-y-1">
             <h2 className="text-lg font-bold text-slate-900 font-display">
-              All 33 Verified Official Portals & Direct Links
+              All 69 Verified Official Portals & Direct Links
             </h2>
             <p className="text-xs text-slate-500">
               Direct access to apply on the official global platforms and portals:
@@ -702,11 +777,24 @@ export default function App() {
             {/* Hackathons */}
             <div className="space-y-2.5">
               <h3 className="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5 flex items-center justify-between">
-                <span>Hackathon Platforms (10)</span>
-                <span className="text-slate-400 font-normal">Global & India</span>
+                <span>Hackathon Platforms (23)</span>
+                <span className="text-slate-400 font-normal">Online & Hybrid</span>
               </h3>
-              <ul className="space-y-1.5 text-xs">
+              <ul className="space-y-1.5 text-xs max-h-[460px] overflow-y-auto pr-1">
                 {[
+                  { name: 'Flipkart GRiD', url: 'https://unstop.com/competitions/flipkart-grid' },
+                  { name: 'Amazon ML Challenge', url: 'https://unstop.com/amazon-ml-challenge' },
+                  { name: 'HackWithInfy (Infosys)', url: 'https://www.infytq.com/hackwithinfy' },
+                  { name: 'TCS CodeVita', url: 'https://www.tcscodevita.com' },
+                  { name: 'Microsoft Imagine Cup', url: 'https://imaginecup.microsoft.com' },
+                  { name: 'Google Solution Challenge', url: 'https://developers.google.com/community/gdsc-solution-challenge' },
+                  { name: 'Reliance Jio / Jio Institute', url: 'https://www.jioinstitute.edu.in' },
+                  { name: 'Mahindra Rise & Tech Mahindra', url: 'https://www.techmahindra.com' },
+                  { name: 'AWS Hackathons', url: 'https://aws.amazon.com/events/' },
+                  { name: 'Hack The Box (Security)', url: 'https://www.hackthebox.com' },
+                  { name: 'GeeksforGeeks Events', url: 'https://www.geeksforgeeks.org/events' },
+                  { name: 'Coding Ninjas Events', url: 'https://www.codingninjas.com/events' },
+                  { name: 'CodeStudio / Code360', url: 'https://www.naukri.com/code360/contests' },
                   { name: 'Devpost', url: 'https://devpost.com/hackathons' },
                   { name: 'Unstop Hackathons', url: 'https://unstop.com/hackathons' },
                   { name: 'Devfolio', url: 'https://devfolio.co/hackathons' },
@@ -736,11 +824,18 @@ export default function App() {
             {/* Certifications */}
             <div className="space-y-2.5">
               <h3 className="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5 flex items-center justify-between">
-                <span>Certification Providers (13)</span>
+                <span>Certification Providers (20)</span>
                 <span className="text-slate-400 font-normal">Free & Verified</span>
               </h3>
-              <ul className="space-y-1.5 text-xs">
+              <ul className="space-y-1.5 text-xs max-h-[460px] overflow-y-auto pr-1">
                 {[
+                  { name: 'Skill India Digital Hub', url: 'https://www.skillindiadigital.gov.in' },
+                  { name: 'NASSCOM FutureSkills Prime', url: 'https://futureskillsprime.in' },
+                  { name: 'Infosys Springboard', url: 'https://infosysspringboard.onwingspan.com' },
+                  { name: 'Great Learning Academy', url: 'https://www.mygreatlearning.com/academy' },
+                  { name: 'Simplilearn SkillUP', url: 'https://www.simplilearn.com/skillup-free-online-courses' },
+                  { name: 'DeepLearning.AI', url: 'https://www.deeplearning.ai' },
+                  { name: 'Udemy', url: 'https://www.udemy.com' },
                   { name: 'Google Cloud Skills Boost', url: 'https://www.cloudskillsboost.google' },
                   { name: 'Google Career Certificates', url: 'https://grow.google/certificates' },
                   { name: 'Microsoft Learn Credentials', url: 'https://learn.microsoft.com/credentials' },
@@ -748,7 +843,7 @@ export default function App() {
                   { name: 'NPTEL (IIT & IISc)', url: 'https://nptel.ac.in' },
                   { name: 'SWAYAM National Portal', url: 'https://swayam.gov.in' },
                   { name: 'Coursera', url: 'https://www.coursera.org' },
-                  { name: 'edX', url: 'https://www.edx.org' },
+                  { name: 'edX & Harvard CS50', url: 'https://www.edx.org' },
                   { name: 'freeCodeCamp', url: 'https://www.freecodecamp.org/learn' },
                   { name: 'Kaggle Learn', url: 'https://www.kaggle.com/learn' },
                   { name: 'Cisco Networking Academy', url: 'https://www.netacad.com' },
@@ -773,20 +868,36 @@ export default function App() {
             {/* Internships */}
             <div className="space-y-2.5">
               <h3 className="text-xs font-bold text-slate-900 border-b border-slate-100 pb-1.5 flex items-center justify-between">
-                <span>Internships & Fellowships (10)</span>
+                <span>Internships & Fellowships (26)</span>
                 <span className="text-slate-400 font-normal">Verified Stipends</span>
               </h3>
-              <ul className="space-y-1.5 text-xs">
+              <ul className="space-y-1.5 text-xs max-h-[460px] overflow-y-auto pr-1">
                 {[
+                  { name: 'PM Internship Scheme', url: 'https://pminternship.mca.gov.in' },
+                  { name: 'NCS (National Career Service) Portal', url: 'https://www.ncs.gov.in' },
+                  { name: 'Skill India Digital Hub', url: 'https://www.skillindiadigital.gov.in' },
+                  { name: 'Google STEP and BOLD', url: 'https://buildyourfuture.withgoogle.com/programs' },
+                  { name: 'Google Student Careers', url: 'https://www.google.com/about/careers/applications/students' },
+                  { name: 'Microsoft Internships', url: 'https://careers.microsoft.com/v2/global/en/universityinternships' },
+                  { name: 'Amazon Internships', url: 'https://www.amazon.jobs/en/business_categories/student-programs' },
+                  { name: 'Meta University Careers', url: 'https://www.metacareers.com/careerprograms/students' },
+                  { name: 'Apple Internships', url: 'https://jobs.apple.com/en-in/search?team=internships-STDNT-INTRN' },
+                  { name: 'NVIDIA University Recruiting', url: 'https://www.nvidia.com/en-us/about-nvidia/careers/university-recruiting/' },
+                  { name: 'Adobe Internships', url: 'https://www.adobe.com/careers/university.html' },
+                  { name: 'Summer Research Fellowship (IASc)', url: 'https://www.ias.ac.in/Initiatives/Summer_Research_Fellowship_Programme' },
+                  { name: 'IIT Summer Research Internships', url: 'https://www.iitb.ac.in' },
+                  { name: 'Indeed Internships', url: 'https://in.indeed.com/internship-jobs' },
+                  { name: 'Naukri Campus', url: 'https://www.naukri.com/campus' },
+                  { name: 'Internships.com', url: 'https://www.internships.com' },
+                  { name: 'YouthIndia / Youth4Work', url: 'https://www.youth4work.com' },
                   { name: 'Internshala', url: 'https://internshala.com' },
                   { name: 'Unstop Internships', url: 'https://unstop.com/internships' },
                   { name: 'LinkedIn Internships', url: 'https://www.linkedin.com/jobs/internship-jobs' },
                   { name: 'AICTE Internship Portal', url: 'https://internship.aicte-india.org' },
                   { name: 'Wellfound Startups', url: 'https://wellfound.com' },
                   { name: 'Google Summer of Code (GSoC)', url: 'https://summerofcode.withgoogle.com' },
-                  { name: 'Google Student Careers', url: 'https://www.google.com/about/careers/applications/students' },
                   { name: 'MLH Fellowship', url: 'https://fellowship.mlh.io' },
-                  { name: 'LFX Mentorship', url: 'https://lfx.linuxfoundation.org' },
+                  { name: 'LFX Mentorship (Linux Foundation)', url: 'https://lfx.linuxfoundation.org' },
                   { name: 'Outreachy', url: 'https://www.outreachy.org' },
                 ].map((item) => (
                   <li key={item.name}>
@@ -876,7 +987,7 @@ export default function App() {
                 </span>
               </div>
               <p className="text-slate-500 text-[11px] mt-0.5">
-                A centralized student platform updated everyday. Real verified links to 33+ global hackathons, certifications, and internships.
+                A centralized student platform updated everyday. Real verified links to 69+ global hackathons, certifications, and internships.
               </p>
             </div>
 

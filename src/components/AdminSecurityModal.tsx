@@ -250,7 +250,7 @@ export const AdminSecurityModal: React.FC<AdminSecurityModalProps> = ({
                   className="p-3 rounded-lg border border-slate-200 hover:border-slate-300 text-left flex items-center justify-between group"
                 >
                   <div>
-                    <strong className="block text-slate-800">Verify All 33 Portal HTTPS Endpoints</strong>
+                    <strong className="block text-slate-800">Verify All 40+ Portal HTTPS Endpoints</strong>
                     <span className="text-[11px] text-slate-500">Run integrity check on all hackathon, intern, and cert URLs.</span>
                   </div>
                   <RefreshCw className="w-4 h-4 text-slate-400 group-hover:text-indigo-600" />

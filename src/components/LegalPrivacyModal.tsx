@@ -259,7 +259,9 @@ export const LegalPrivacyModal: React.FC<LegalPrivacyModalProps> = ({
                     <em>
                       Devpost, Unstop, Devfolio, HackerEarth, Major League Hacking,
                       Google, Microsoft, AWS, NPTEL, SWAYAM, Coursera, edX,
-                      freeCodeCamp, Kaggle, Cisco, Oracle, GitHub, Internshala,
+                      freeCodeCamp, Kaggle, Cisco, Oracle, GitHub, Skill India Digital Hub,
+                      NASSCOM FutureSkills Prime, Infosys Springboard, Great Learning,
+                      Simplilearn, DeepLearning.AI, Udemy, Internshala,
                       LinkedIn, AICTE, Wellfound, LFX, Outreachy
                     </em>
                     ) are the registered trademarks of their respective owners. Their

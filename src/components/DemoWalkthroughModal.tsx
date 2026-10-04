@@ -145,7 +145,7 @@ export const DemoWalkthroughModal: React.FC<DemoWalkthroughModalProps> = ({
               </div>
 
               <p className="text-xs text-slate-600 leading-relaxed">
-                By knowing Alex's branch, academic year, and verified skills, the platform calculates match scores across all 33+ official opportunities.
+                By knowing Alex's branch, academic year, and verified skills, the platform calculates match scores across all 40+ official opportunities.
               </p>
             </div>
           )}

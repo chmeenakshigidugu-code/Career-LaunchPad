@@ -92,7 +92,7 @@ export const DailyDigestBanner: React.FC<DailyDigestBannerProps> = ({
 
           <p className="text-xs sm:text-sm text-slate-300 max-w-3xl leading-relaxed">
             Every day, this hub synchronizes active hackathons, certifications, and
-            internship deadlines across 33+ verified official platforms. All
+            internship deadlines across 40+ verified official platforms. All
             opportunities are kept fresh with rolling daily deadlines.
           </p>
         </div>
@@ -123,7 +123,7 @@ export const DailyDigestBanner: React.FC<DailyDigestBannerProps> = ({
             {totalOpportunities}
           </div>
           <div className="text-[10px] text-emerald-400 mt-0.5">
-            All 33+ Verified Portals
+            All 40+ Verified Portals
           </div>
         </div>
 
